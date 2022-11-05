@@ -17,7 +17,7 @@ type Database struct {
 	Env     *string
 }
 
-func UintSliceEqual(a, b []uint) bool {
+func SliceEqual(a, b []int) bool {
 	if len(a) != len(b) {
 		return false
 	}
