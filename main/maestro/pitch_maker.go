@@ -14,6 +14,7 @@ type PitchMaker interface {
 	invertPitchSet(pitchSet []int) []int
 	retrogradeSet(pitchSet []int) []int
 	retrogradeInvertSet(pitchSet []int) []int
+	createToneRowMatrix(pitchSet []int) [][]int
 }
 
 var inversionMap = map[int]int{
@@ -121,9 +122,6 @@ func (p *pitchMake) invertIntervals(intervals []int) []int {
 }
 
 func (p *pitchMake) invertPitchSet(pitchSet []int) []int {
-	for _, pitch := range pitchSet {
-		fmt.Printf("pitch args%d \n", pitch)
-	}
 	invertedSet := make([]int, len(pitchSet))
 	invertedSet[0] = pitchSet[0]
 
@@ -135,13 +133,10 @@ func (p *pitchMake) invertPitchSet(pitchSet []int) []int {
 		interval := p.findInterval(pitchSet[i-1], pitch)
 		invertedInterval := p.invertInterval(interval)
 		if pitchSet[i-1] > pitch {
-			fmt.Printf("pitch-1 %d is greater than pitch %d \n", pitchSet[i-1], pitch)
 			invertedSet[i] = p.transposeUp(invertedSet[i-1], invertedInterval)
 		} else {
-			fmt.Printf("pitch-1 %d is less than pitch %d \n", pitchSet[i-1], pitch)
 			invertedSet[i] = p.transposeDown(invertedSet[i-1], interval)
 		}
-		fmt.Printf("invertedSet: %v \n", invertedSet)
 	}
 
 	return invertedSet
@@ -172,4 +167,12 @@ func (p *pitchMake) retrogradeSet(pitchSet []int) []int {
 	return retrogradedSet
 }
 
-// work on matrix generation next
+func (p *pitchMake) retrogradeInvertSet(pitchSet []int) []int {
+	invertedSet := p.invertPitchSet(pitchSet)
+	retrogradeInvertedSet := p.retrogradeSet(invertedSet)
+	return retrogradeInvertedSet
+}
+
+func (p *pitchMake) createToneRowMatrix(pitchSet []int) {
+
+}
