@@ -222,4 +222,102 @@ func TestPitchMaker(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("createToneRowMatrix should correctly create a matrix of tone rows", func(t *testing.T) {
+		argOneWant := [][]int{
+			{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
+			{11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+			{10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			{9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8},
+			{8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7},
+			{7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6},
+			{6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5},
+			{5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4},
+			{4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
+			{3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2},
+			{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1},
+			{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0},
+		}
+
+		argTwoWant := [][]int{
+			{0, 11, 10, 4, 2, 9, 3, 6, 8, 7, 1, 5},
+			{1, 0, 11, 5, 3, 10, 4, 7, 9, 8, 2, 6},
+			{2, 1, 0, 6, 4, 11, 5, 8, 10, 9, 3, 7},
+			{8, 7, 6, 0, 10, 5, 11, 2, 4, 3, 9, 1},
+			{10, 9, 8, 2, 0, 7, 1, 4, 6, 5, 11, 3},
+			{3, 2, 1, 7, 5, 0, 6, 9, 11, 10, 4, 8},
+			{9, 8, 7, 1, 11, 6, 0, 3, 5, 4, 10, 2},
+			{6, 5, 4, 10, 8, 3, 9, 0, 2, 1, 7, 11},
+			{4, 3, 2, 8, 6, 1, 7, 10, 0, 11, 5, 9},
+			{5, 4, 3, 9, 7, 2, 8, 11, 1, 0, 6, 10},
+			{11, 10, 9, 3, 1, 8, 2, 5, 7, 6, 0, 4},
+			{7, 6, 5, 11, 9, 4, 10, 1, 3, 2, 8, 0},
+		}
+
+		argThreeWant := [][]int{
+			{1, 6, 3},
+			{8, 1, 10},
+			{11, 4, 1},
+		}
+
+		argFourWant := [][]int{
+			{4, 2, 7, 5},
+			{6, 4, 9, 7},
+			{1, 11, 4, 2},
+			{3, 1, 6, 4},
+		}
+
+		argFiveWant := [][]int{
+			{6, 1, 8, 3, 10, 11},
+			{11, 6, 1, 8, 3, 4},
+			{4, 11, 6, 1, 8, 9},
+			{9, 4, 11, 6, 1, 2},
+			{2, 9, 4, 11, 6, 7},
+			{1, 8, 3, 10, 5, 6},
+		}
+
+		for i := 0; i < len(args); i++ {
+			got := pitchMaker.createToneRowMatrix(args[i])
+
+			switch i {
+			case 0:
+				for j := 0; j < len(got); j++ {
+					if !shared.SliceEqual(got[j], argOneWant[j]) {
+						t.Errorf("got %v want %v", got[j], argOneWant[j])
+					} else {
+						fmt.Printf("\n OK! \n")
+					}
+				}
+			case 1:
+				for j := 0; j < len(got); j++ {
+					if !shared.SliceEqual(got[j], argTwoWant[j]) {
+						fmt.Printf("Args 2")
+						t.Errorf("got %v want %v", got[j], argTwoWant[j])
+					}
+				}
+			case 2:
+				for j := 0; j < len(got); j++ {
+					if !shared.SliceEqual(got[j], argThreeWant[j]) {
+						fmt.Printf("Args 3")
+						t.Errorf("got %v want %v", got[j], argThreeWant[j])
+					}
+				}
+			case 3:
+				for j := 0; j < len(got); j++ {
+					if !shared.SliceEqual(got[j], argFourWant[j]) {
+						fmt.Printf("Args 4")
+						t.Errorf("got %v want %v", got[j], argFourWant[j])
+					}
+				}
+			case 4:
+				for j := 0; j < len(got); j++ {
+					if !shared.SliceEqual(got[j], argFiveWant[j]) {
+						fmt.Printf("Args 5")
+						t.Errorf("got %v want %v", got[j], argFiveWant[j])
+					}
+				}
+			}
+		}
+
+	})
 }
