@@ -21,6 +21,11 @@ type PitchRequest struct {
 	Pitches []int `json:"pitches"`
 }
 
+type VoicingsRequest struct {
+	Pitches []int `json:"pitches"`
+	Amount  int   `json:"amount"`
+}
+
 func SliceEqual(a, b []int) bool {
 	if len(a) != len(b) {
 		return false

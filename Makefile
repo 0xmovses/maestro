@@ -1,4 +1,4 @@
-start:
+server:
 	go run -v ./... 
 
 test:

@@ -1,5 +1,11 @@
 package maestro
 
+import (
+	"math/rand"
+	"reflect"
+	"time"
+)
+
 type PitchMaker interface {
 	transposeUp(pitch, interval int) int
 	transposeDown(pitch, interval int) int
@@ -159,6 +165,38 @@ func (p *PitchMake) CreateToneRowMatrix(pitchSet []int) [][]int {
 	}
 
 	return matrix
+}
+
+func (p *PitchMake) CreateVoicings(pitchSet []int, amount int) [][]int {
+	matrix := make([][]int, amount)
+
+	for i := 0; i < amount; i++ {
+		temp := make([]int, len(pitchSet))
+		randomizedSet := p.randomizeOrder(pitchSet)
+		for j := 0; j < len(pitchSet); j++ {
+			temp[j] = randomizedSet[j]
+		}
+		matrix[i] = temp
+
+	}
+
+	//remove duplicate voicings
+	for i := 0; i < len(matrix); i++ {
+		for j := i + 1; j < len(matrix); j++ {
+			if reflect.DeepEqual(matrix[i], matrix[j]) {
+				matrix = append(matrix[:j], matrix[j+1:]...)
+				j--
+			}
+		}
+	}
+
+	return matrix
+}
+
+func (p *PitchMake) randomizeOrder(pitchSet []int) []int {
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(pitchSet), func(i, j int) { pitchSet[i], pitchSet[j] = pitchSet[j], pitchSet[i] })
+	return pitchSet
 }
 
 func initializeEmptyMatrix(n int) [][]int {

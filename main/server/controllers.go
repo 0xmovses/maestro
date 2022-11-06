@@ -29,6 +29,20 @@ func (a *App) createPitchMatrix(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, matrix)
 }
 
+func (a *App) createVoicings(w http.ResponseWriter, r *http.Request) {
+	var p shared.VoicingsRequest
+
+	if err := scanJSON(r.Body, &p); err != nil {
+		respondWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	fmt.Printf("pitches: %+v \n", p)
+
+	voicings := a.Composer.CreateVoicings(p.Pitches, p.Amount)
+	respondWithJSON(w, http.StatusOK, voicings)
+}
+
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
