@@ -14,7 +14,6 @@ type PitchMaker interface {
 	invertPitchSet(pitchSet []int) []int
 	retrogradeSet(pitchSet []int) []int
 	retrogradeInvertSet(pitchSet []int) []int
-	createToneRowMatrix(pitchSet []int) [][]int
 }
 
 var inversionMap = map[int]int{
@@ -140,23 +139,6 @@ func (p *pitchMake) invertPitchSet(pitchSet []int) []int {
 	}
 
 	return invertedSet
-}
-
-func getCircularNextPitch(pitchSet []int, i int) int {
-	var next int
-	if i == len(pitchSet)-1 {
-		next = pitchSet[0]
-		return makeZeroTheGreatest(next)
-	}
-	next = pitchSet[i+1]
-	return makeZeroTheGreatest(next)
-}
-
-func makeZeroTheGreatest(pitch int) int {
-	if pitch == 0 {
-		pitch = 12
-	}
-	return pitch
 }
 
 func (p *pitchMake) retrogradeSet(pitchSet []int) []int {

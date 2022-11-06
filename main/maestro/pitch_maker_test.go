@@ -222,10 +222,4 @@ func TestPitchMaker(t *testing.T) {
 			}
 		}
 	})
-
-	t.Run("createToneRowMatric should correctly create a matrix of tone rows", func(t *testing.T) {
-		arg := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
-		got := pitchMaker.createToneRowMatrix(arg)
-		fmt.Printf("got: %v \n", got)
-	})
 }
