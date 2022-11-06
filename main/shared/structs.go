@@ -17,6 +17,10 @@ type Database struct {
 	Env     *string
 }
 
+type PitchRequest struct {
+	Pitches []int `json:"pitches"`
+}
+
 func SliceEqual(a, b []int) bool {
 	if len(a) != len(b) {
 		return false

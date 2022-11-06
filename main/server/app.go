@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/rvmelkonian/maestro/main/maestro"
 	"github.com/rvmelkonian/maestro/main/middleware"
 	"github.com/rvmelkonian/maestro/main/shared"
 )
@@ -18,8 +19,9 @@ type App struct {
 	Router *mux.Router
 	DB     *shared.Database
 
-	Env    string
-	Config shared.Config
+	Env      string
+	Config   shared.Config
+	Composer maestro.PitchMake
 }
 
 func (a *App) Run() {
@@ -56,7 +58,8 @@ func (a *App) Initialize() {
 	a.Router.Use(middleware.Logger)
 	a.Router.Use(middleware.UseCors(a.Config))
 
-	a.Initialize()
+	// Composer
+	a.Composer = maestro.PitchMake{}
 }
 
 func (a *App) ConnectDB(username, password, host, port, dbname string) {

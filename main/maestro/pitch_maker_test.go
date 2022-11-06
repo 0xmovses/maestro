@@ -1,7 +1,6 @@
 package maestro
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/rvmelkonian/maestro/main/shared"
@@ -181,7 +180,6 @@ func TestPitchMaker(t *testing.T) {
 		}
 
 		for i := 0; i < len(args); i++ {
-			fmt.Printf("args: %v \n", args[i])
 			got := pitchMaker.invertPitchSet(args[i])
 			if !shared.SliceEqual(got, want[i]) {
 				t.Errorf("got %v want %v", got, want[i])
@@ -277,42 +275,36 @@ func TestPitchMaker(t *testing.T) {
 		}
 
 		for i := 0; i < len(args); i++ {
-			got := pitchMaker.createToneRowMatrix(args[i])
+			got := pitchMaker.CreateToneRowMatrix(args[i])
 
 			switch i {
 			case 0:
 				for j := 0; j < len(got); j++ {
 					if !shared.SliceEqual(got[j], argOneWant[j]) {
 						t.Errorf("got %v want %v", got[j], argOneWant[j])
-					} else {
-						fmt.Printf("\n OK! \n")
 					}
 				}
 			case 1:
 				for j := 0; j < len(got); j++ {
 					if !shared.SliceEqual(got[j], argTwoWant[j]) {
-						fmt.Printf("Args 2")
 						t.Errorf("got %v want %v", got[j], argTwoWant[j])
 					}
 				}
 			case 2:
 				for j := 0; j < len(got); j++ {
 					if !shared.SliceEqual(got[j], argThreeWant[j]) {
-						fmt.Printf("Args 3")
 						t.Errorf("got %v want %v", got[j], argThreeWant[j])
 					}
 				}
 			case 3:
 				for j := 0; j < len(got); j++ {
 					if !shared.SliceEqual(got[j], argFourWant[j]) {
-						fmt.Printf("Args 4")
 						t.Errorf("got %v want %v", got[j], argFourWant[j])
 					}
 				}
 			case 4:
 				for j := 0; j < len(got); j++ {
 					if !shared.SliceEqual(got[j], argFiveWant[j]) {
-						fmt.Printf("Args 5")
 						t.Errorf("got %v want %v", got[j], argFiveWant[j])
 					}
 				}
